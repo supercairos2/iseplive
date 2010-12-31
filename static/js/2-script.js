@@ -187,20 +187,32 @@ var Post = {
 		if(location.hash.indexOf('#') == 0)
 			window.fireEvent('hashchange', location.hash.substr(1));
 		
-		$("attachment-photo-prev").addEvent("click", function(){
+		var prev = function(){
 			var i = Post.currentPhoto-1;
 			if(i < 0)
 				i = Post.photos.length-1;
 			location.hash = '#photo-'+Post.photos[i].id;
-		});
-		$("attachment-photo-next").addEvent("click", function(){
+		};
+		var next = function(){
 			var i = Post.currentPhoto+1;
 			if(i >= Post.photos.length)
 				i = 0;
 			location.hash = '#photo-'+Post.photos[i].id;
-		});
+		};
+		$("attachment-photo-prev").addEvent("click", prev);
+		$("attachment-photo-next").addEvent("click", next);
 		$("attachment-photo-album").addEvent("click", function(){
 			location.hash = '';
+		});
+		window.addEvent("keydown", function(e){
+			if(e.key == 'right' || e.key == 'up' || e.key == 'space'){
+				next();
+				return false;
+			}
+			if(e.key == 'left' || e.key == 'down' || e.key == 'backspace'){
+				prev();
+				return false;
+			}
 		});
 	},
 	
