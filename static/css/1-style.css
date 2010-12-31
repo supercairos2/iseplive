@@ -455,6 +455,9 @@ h1, h1 a, h1 a:hover, h1 a:visited, h1 a:active, h1 a:focus {
 	float: right;
 	text-align: right;
 }
+#attachment-photo-album {
+	display: block;
+}
 #attachment-photo-img {
 	margin-top: 5px;
 	cursor: pointer;
