@@ -686,7 +686,7 @@ var Group = {
 			Group.sortableMembers.removeItems(el);
 			el.destroy();
 		});
-	},
+	}
 };
 
 
