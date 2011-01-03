@@ -58,7 +58,7 @@ class Date {
 	 */
 	public static function dateMonth($time){
 		$year = date('Y', $time);
-		return __($year == date('Y') ? 'DATE_MONTH' : 'DATE_MONTH_WITH_YEAR', array(
+		return __($year == date('Y') ? 'DATE_MONTH_WITHOUT_YEAR' : 'DATE_MONTH_WITH_YEAR', array(
 			'day'		=> self::getDay($time),
 			'date'		=> self::getDate($time),
 			'month'		=> self::getMonth($time),

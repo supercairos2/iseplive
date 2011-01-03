@@ -534,7 +534,7 @@ DATE_FULL
 	{day} {date} {month} à {hour}:{min}
 DATE_FULL_WITH_YEAR
 	{day} {date} {month} {year} à {hour}:{min}
-DATE_MONTH
+DATE_MONTH_WITHOUT_YEAR
 	{day} {date} {month}
 DATE_MONTH_WITH_YEAR
 	{day} {date} {month} {year}
