@@ -13,16 +13,16 @@ class Date {
 	 * @return string
 	 */
 	public static function easy($time){
-		$date = date('j', $time);
+		$date = date('dmY', $time);
 		
 		// If it's today, date in hour, minutes, seconds
-		if($date == date('j'))
+		if($date == date('dmY'))
 			return __('DATE_RECENT', array(
 				'interval'	=> self::interval(time() - $time, 1)
 			));
 		
 		// It it's yesterday
-		if($date == date('j', time()-86400))
+		if($date == date('dmY', time()-86400))
 			return __('DATE_YESTERDAY', array(
 				'hour'		=> date('H', $time),
 				'min'		=> date('i', $time)
