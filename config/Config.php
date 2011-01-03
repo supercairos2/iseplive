@@ -32,6 +32,9 @@ final class Config extends ConfigAbstract {
 		'basedn'	=> 'ou=People,dc=isep.fr'
 	);
 	
+	// Authentication mode: 'ldap' (ISEP's LDAP) or 'form' (using https://gcma.isep.fr/ form over https)
+	const AUTHENTICATION_MODE	= 'form';
+	
 	// Encryption secret key (for Encryption class)
 	const ENCRYPTION_KEY	= 'OyFDrRd3db';
 	
@@ -80,7 +83,7 @@ final class Config extends ConfigAbstract {
 	
 	// Max uploaded files sizes
 	const UPLOAD_MAX_SIZE_PHOTO = 2097152;
-	const UPLOAD_MAX_SIZE_VIDEO = 209715200;
+	const UPLOAD_MAX_SIZE_VIDEO = 629145600;
 	const UPLOAD_MAX_SIZE_AUDIO = 20971520;
 	const UPLOAD_MAX_SIZE_FILE = 10485760;
 	

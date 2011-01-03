@@ -30,11 +30,41 @@ class User_Model extends Model {
 	 * @return boolean	True on success, false on failure
 	 */
 	public function authenticate($username, $password){
-		$this->loadUser($username);
-		return true;
-		$ldap_conn = ldap_connect(Config::$LDAP['host'], Config::$LDAP['port']);
+		if(Config::DEBUG){
+			$this->loadUser($username);
+			return true;
+		}
+		
 		try {
-			$result = ldap_bind($ldap_conn, 'uid='.$username.','.Config::$LDAP['basedn'], $password);
+			if(Config::AUTHENTICATION_MODE == 'ldap'){
+				$ldap_conn = ldap_connect(Config::$LDAP['host'], Config::$LDAP['port']);
+				$result = ldap_bind($ldap_conn, 'uid='.$username.','.Config::$LDAP['basedn'], $password);
+				
+			}else{
+				$curl = curl_init();
+				curl_setopt_array($curl, array(
+						CURLOPT_POST => 1,
+						CURLOPT_HEADER => 1,
+						CURLOPT_URL => 'https://gcma.isep.fr/vlogin.php',
+						CURLOPT_FRESH_CONNECT => 1,
+						CURLOPT_RETURNTRANSFER => 1,
+						CURLOPT_FORBID_REUSE => 1,
+						CURLOPT_TIMEOUT => 4,
+						CURLOPT_POSTFIELDS => http_build_query(array(
+								'loginu'        => $username,
+								'passwd'        => $password,
+								'cmd'           => 'Entrer !'
+						)),
+						CURLOPT_SSL_VERIFYPEER => 0,
+						CURLOPT_SSL_VERIFYHOST => 0
+				));
+				$result = curl_exec($curl);
+				curl_close($curl);
+				if(!$result)
+					throw new Exception();
+				$result = strpos($result, 'Location: debut.php') !== false;
+			}
+			
 			// Login successful
 			if($result){
 				// Loading the user's data
@@ -53,6 +83,7 @@ class User_Model extends Model {
 				}
 			}
 			return $result;
+			
 		}catch(Exception $e){
 			return false;
 		}
