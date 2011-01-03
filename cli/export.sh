@@ -37,6 +37,19 @@ echo "JS and CSS compression..."
 ls $DIR_EXPORT/static/js/[0-9]-*.js | grep -v _src | xargs cat > $DIR_EXPORT/static/js/script.js
 ls $DIR_EXPORT/static/css/[0-9]-*.css | grep -v _src | xargs cat > $DIR_EXPORT/static/css/style.css
 
+echo "Configuration..."
+
+mv $DIR_EXPORT/config/Config.php $DIR_EXPORT/config/Config.php.dev
+cp $DIR_PROD/config/Config.php $DIR_EXPORT/config/Config.php
+diff \
+	-I URL_ABSOLUTE \
+	-I URL_STORAGE \
+	-I password \
+	-I ENCRYPTION_KEY \
+	-I DEBUG \
+	$DIR_EXPORT/config/Config.php $DIR_EXPORT/config/Config.php.dev | patch $DIR_EXPORT/config/Config.php
+rm $DIR_EXPORT/config/Config.php.dev
+
 chown -R www-data:www-data $DIR_EXPORT
 chmod -R 770 $DIR_EXPORT
 

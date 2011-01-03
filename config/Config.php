@@ -55,7 +55,7 @@ final class Config extends ConfigAbstract {
 		'prefix'	=> 'iseplive-'
 	);
 	
-	// Solr
+	// ElasticSearch
 	public static $ELASTICSEARCH	= array(
 		'host'	=> 'localhost',
 		'port'	=> 9200,
