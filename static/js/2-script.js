@@ -205,12 +205,18 @@ var Post = {
 			location.hash = '';
 		});
 		window.addEvent("keydown", function(e){
-			if(e.key == 'right' || e.key == 'up' || e.key == 'space'){
+			if(e.target && ["INPUT", "SELECT", "TEXTAREA"].contains(e.target.tagName))
+				return;
+			if(e.key == 'right' || e.key == 'space'){
 				next();
 				return false;
 			}
-			if(e.key == 'left' || e.key == 'down' || e.key == 'backspace'){
+			if(e.key == 'left' || e.key == 'backspace'){
 				prev();
+				return false;
+			}
+			if(e.key == 'up'){
+				location.hash = '';
 				return false;
 			}
 		});
