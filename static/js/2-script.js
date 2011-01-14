@@ -168,6 +168,7 @@ var Post = {
 						else
 							e.addClass("hidden");
 					});
+					$$(".post-delete").addClass("hidden");
 				}
 				
 			}else if(photos[0].hasClass('hidden')){
@@ -182,6 +183,7 @@ var Post = {
 					else
 						e.addClass("hidden");
 				});
+				$$(".post-delete").removeClass("hidden");
 			}
 		});
 		if(location.hash.indexOf('#') == 0)

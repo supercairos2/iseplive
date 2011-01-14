@@ -36,6 +36,7 @@ Required packages :
 	apache2
 	php5
 	php5-gd
+	php5-mcrypt
 	php5-ldap
 	php5-memcache
 	php-apc
