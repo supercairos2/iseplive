@@ -45,6 +45,7 @@ diff \
 	-I URL_ABSOLUTE \
 	-I URL_STORAGE \
 	-I password \
+	-I AUTHENTICATION_MODE \
 	-I ENCRYPTION_KEY \
 	-I DEBUG \
 	$DIR_EXPORT/config/Config.php $DIR_EXPORT/config/Config.php.dev | patch $DIR_EXPORT/config/Config.php
