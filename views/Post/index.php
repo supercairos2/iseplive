@@ -68,6 +68,11 @@ foreach($categories as $category){
 			require dirname(__FILE__).'/../_includes/calendar.php';
 			?>
 		</div>
+		<br /><br />
+		
+		<h2><?php echo __('POST_SPONSOR_TITLE'); ?></h2>
+		<a href="http://www.st.com/"><img src="<?php echo Config::URL_STATIC; ?>images/logo-st.png" alt="STMicroelectronics" /></a>
+		
 	</div>
 	
 </div>

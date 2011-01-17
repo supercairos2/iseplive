@@ -95,6 +95,9 @@ CALENDAR_ICAL_OFFICIAL
 CALENDAR_ICAL_NON_OFFICIAL
 	iCal élèves
 
+POST_SPONSOR_TITLE
+	Sponsor officiel
+
 # View: events
 EVENTS_TITLE_OFFICIAL
 	Événements des associations
