@@ -423,20 +423,24 @@ class Post_Controller extends Controller {
 							unset($img);
 							
 							// Convert to FLV
-							$toolkit = new PHPVideoToolkit();
-							$toolkit->on_error_die = true;	// Will throw exception on error
-							$toolkit->setInputFile($filepath);
-							$toolkit->setVideoOutputDimensions($video_width, $video_height);
-							$toolkit->setFormatToFLV(Config::VIDEO_SAMPLING_RATE, Config::VIDEO_AUDIO_BIT_RATE);
-							$toolkit->setOutput(DATA_DIR.Config::DIR_DATA_TMP, File::getName($filepath).'.flv', PHPVideoToolkit::OVERWRITE_EXISTING);
-							$toolkit->execute(false, false);	// Multipass: false, Log: false
+							if(!preg_match('#\.flv$#i', $filepath)){
+								$toolkit = new PHPVideoToolkit();
+								$toolkit->on_error_die = true;	// Will throw exception on error
+								$toolkit->setInputFile($filepath);
+								$toolkit->setVideoOutputDimensions($video_width, $video_height);
+								$toolkit->setFormatToFLV(Config::VIDEO_SAMPLING_RATE, Config::VIDEO_AUDIO_BIT_RATE);
+								$toolkit->setOutput(DATA_DIR.Config::DIR_DATA_TMP, File::getName($filepath).'.flv', PHPVideoToolkit::OVERWRITE_EXISTING);
+								$toolkit->execute(false, false);	// Multipass: false, Log: false
 							
-							File::delete($filepath);
-							$filepath = $toolkit->getLastOutput();
+								File::delete($filepath);
+								$filepath = $toolkit->getLastOutput();
+								$filepath = $filepath[0];
+								
+								unset($toolkit);
+							}
 							
-							unset($toolkit);
-							$attachments[] = array($filepath[0], $name, $thumbpath);
-							$uploaded_files[] = $filepath[0];
+							$attachments[] = array($filepath, $name, $thumbpath);
+							$uploaded_files[] = $filepath;
 							
 						}catch(Exception $e){
 							throw new Exception(__('POST_ADD_ERROR_VIDEO_CONVERT').$e->getMessage());

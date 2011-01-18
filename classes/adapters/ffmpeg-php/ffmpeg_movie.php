@@ -49,7 +49,7 @@
 			$this->_path_to_media = $path_to_media;
 			$this->_tmp_directory = $tmp_directory;
 // 			init PHPVideoToolkit class
-			require_once dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR.'phpvideotoolkit.php5.php';
+			require_once dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR.'class.PHPVideoToolkit.php';
 			$this->_toolkit = new PHPVideoToolkit($tmp_directory);
 			$this->_toolkit->on_error_die = false;
 // 			set the input
