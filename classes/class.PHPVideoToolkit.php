@@ -1282,7 +1282,7 @@
 				return $this->_raiseError('setAudioBitRate_valid_bitrate', array('bitrate'=>$bitrate));
 //<-			exits
 			}
-			return $this->addCommand('-ab', $bitrate.'kb');
+			return $this->addCommand('-ab', $bitrate.'k');
 		}
 
 		/**
@@ -1371,7 +1371,7 @@
 		public function setVideoBitRate($bitrate)
 		{
 			$bitrate = intval($bitrate);
-			return $this->addCommand('-b', $bitrate.'kb');
+			return $this->addCommand('-b', $bitrate.'k');
 		}
 		
 		/**
