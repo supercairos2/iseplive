@@ -108,7 +108,7 @@ class Post_Model extends Model {
 				SELECT post_id, id, name, ext
 				FROM attachments
 				WHERE post_id IN ('.implode(',', $post_ids).')
-				ORDER BY ext
+				ORDER BY ext, id ASC
 			');
 			$attachments_by_post_id = array();
 			$nb_photos_by_post_id = array();
