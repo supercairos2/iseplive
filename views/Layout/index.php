@@ -55,7 +55,6 @@ foreach($cssFiles as $cssFile){
 					<?php if($is_logged){ ?>
 					<a href="<?php echo Config::URL_ROOT.Routes::getPage('students'); ?>"><?php echo __('NAV_DIRECTORY'); ?></a>
 					<?php } ?>
-					<a href="<?php echo Config::URL_ROOT.Routes::getPage('links'); ?>"><?php echo __('NAV_LINKS'); ?></a>
 					<?php if($is_logged){ ?>
 						<?php if($is_student){ ?>
 					<a href="<?php echo Config::URL_ROOT.Routes::getPage('student', array('username' => $username)); ?>"><?php echo __('NAV_PROFILE'); ?></a>

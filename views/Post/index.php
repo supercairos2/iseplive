@@ -72,6 +72,20 @@ foreach($categories as $category){
 		
 		<h2><?php echo __('POST_SPONSOR_TITLE'); ?></h2>
 		<a href="http://www.st.com/"><img src="<?php echo Config::URL_STATIC; ?>images/logo-st.png" alt="STMicroelectronics" /></a>
+		<br /><br />
+		
+		<h2><?php echo __('POST_USEFUL_LINKS'); ?></h2>
+		<ul>
+			<li><a href="http://www.isep.fr/">Site de l'ISEP</a></li>
+			<li><a href="http://planning.isep.fr/">Plannings ISEP</a></li>
+			<li><a href="http://eleves.isep.fr/moodle/">Moodle ISEP</a></li>
+			<li><a href="http://webmail.isep.fr/">Webmail ISEP</a></li>
+			<li><a href="http://gcma.isep.fr">Annuaire ISEP</a></li>
+			<li><a href="http://logement.isep.fr/">Logements ISEP</a></li>
+			<li><a href="http://forge.isep.fr/">Forge ISEP</a></li>
+			<li><a href="http://admsys.isep.fr/docpost/">Upload de documents ISEP</a></li>
+		</ul>
+
 		
 	</div>
 	

@@ -3,14 +3,6 @@
 class Page_Controller extends Controller {
 	
 	/**
-	 * Links page
-	 */
-	public function links(){
-		$this->setView('links.php');
-		$this->setTitle(__('PAGE_LINKS_TITLE'));
-	}
-	
-	/**
 	 * Page not found : 404 Error
 	 */
 	public function error404(){

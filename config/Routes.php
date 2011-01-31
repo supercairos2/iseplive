@@ -290,14 +290,6 @@ final class Routes extends RoutesAbstract {
 			'url'		=> 'ajax/autocomplete/student/name'
 		),
 		
-		
-		// Other pages
-		'links'	=> array(
-			'regexp'	=> '^links(?=\?|$)',
-			'vars'		=> 'controller=Page&action=links',
-			'url'		=> 'links'
-		),
-		
 	);
 
 }

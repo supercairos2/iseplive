@@ -8,8 +8,6 @@ NAV_GROUPS
 	Associations
 NAV_DIRECTORY
 	Annuaire
-NAV_LINKS
-	Liens
 NAV_PROFILE
 	Mon profil
 NAV_LOGOUT
@@ -21,10 +19,6 @@ LAYOUT_SEARCH_FIELD
 
 
 ### Controller: Page
-
-# View: links
-PAGE_LINKS_TITLE
-	Liens utiles
 
 # View: error404
 PAGE_ERROR404_TITLE
@@ -97,6 +91,8 @@ CALENDAR_ICAL_NON_OFFICIAL
 
 POST_SPONSOR_TITLE
 	Sponsor officiel
+POST_USEFUL_LINKS
+	Liens utiles
 
 # View: events
 EVENTS_TITLE_OFFICIAL
