@@ -16,7 +16,7 @@ class Text {
 		$txt = htmlspecialchars($txt);
 		$txt = nl2br($txt);
 		// Links
-		$txt = preg_replace('#(?<=^|[^a-z"/])((?:http://|www\.)[^\s\(\),<>]*)(?=[\s\(\),<>]|$)#im', '<a href="\\1">\\1</a>', $txt);
+		$txt = preg_replace('#(?<=^|[^a-z"/])((?:https?://|www\.)[^\s\(\),<>]*)(?=[\s\(\),<>]|$)#im', '<a href="\\1">\\1</a>', $txt);
 		$txt = str_replace('<a href="www.', '<a href="http://www.', $txt);
 		return $txt;
 	}
