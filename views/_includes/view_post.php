@@ -264,7 +264,7 @@ if (isset($post['likes'])) {
         if ($like['username'] != User_Model::$auth_data['username'])
             $name[] = '<a href="' . $like_user_url . '" class="post-comment-username">' . htmlspecialchars($like['firstname'] .' '. $like['lastname']) . '</a>';
     }
-    // On compte combient ils sont
+    // On compte combien ils sont
     $last = count($name) - 1;
     // On fait de belle phrase !
     if ($last > 0) {
@@ -381,6 +381,43 @@ if(($is_logged && $username == $comment['username'])
 					<?php echo Text::inHTML($comment['message']); ?>
 					<div class="post-comment-info">
 						<?php echo Date::easy((int) $comment['time']); ?>
+<?php
+    /* Likes */
+    $has_liked = (empty($comment['user_liked'])) ? false : in_array(User_Model::$auth_data['id'], $comment['user_liked'], true);
+?>
+                        &#183; <a href="javascript:;" onclick="Like.initPostComLike(<?php echo $post['id'] ?>, <?php echo $comment['id'] ?>)" id="post-com-like-link-<?php echo $comment['id'] ?>"<?php if($has_liked) echo ' class="hidden"'; ?>><?php echo __('POST_LIKE_LINK'); ?></a>
+                        <a href="javascript:;" onclick="Like.initPostComUnlike(<?php echo $post['id'] ?>, <?php echo $comment['id'] ?>)" id="post-com-unlike-link-<?php echo $comment['id'] ?>"<?php if(!$has_liked) echo ' class="hidden"'; ?>><?php echo __('POST_UNLIKE_LINK'); ?></a>
+<?php
+    $nb = count($comment['user_liked']);
+    if ($nb == 0)
+        echo '<span id="post-com-like-new-'.$comment['id'].'" class="hidden">'.__('POST_LIKE_USER').' '.__('POST_LIKE_END_SING_2').'</span>';
+    else if ($nb == 1) {
+        $like_user_url = Config::URL_ROOT . Routes::getPage('student', array('username' => $comment['like'][0]['username']));
+        if($comment['like'][0]['username'] ==  User_Model::$auth_data['username'])
+            $name = '<span id="post-com-like-new-'.$comment['id'].'">'.__('POST_LIKE_USER').' '.__('POST_LIKE_END_SING_2').'</span>';
+        else
+            $name = '<span id="post-com-like-new-'.$comment['id'].'" class="is-stranger"><a href="' . $like_user_url . '" class="post-comment-username">' . htmlspecialchars($comment['like'][0]['firstname'] . ' ' . $comment['like'][0]['lastname']) . '</a>'. ' ' . __('POST_LIKE_END_SING_1').'</span>';
+            $name .= '<span id="post-com-unlike-new-'.$comment['id'].'" class="hidden">2 '.__('POST_LIKE_END_PLURAL_1').'</span>';
+        echo $name;
+        unset($name);
+    } else {
+        echo '<a href="javascript:;" id="post-com-like-new-'.$comment['id'].'" class="has-value" onclick="Like.showAllCom('.$comment['id'].')"><span id="post-com-like-val-'.$comment['id'].'">'.$nb.'</span> '.__('POST_LIKE_END_PLURAL_1').'</a>';
+        $name = array();
+        foreach ($comment['like'] as $comment_like) {
+            if($comment['like'][0]['username'] ==  User_Model::$auth_data['username'])
+                    $name[] = __('POST_LIKE_USER').' '.__('POST_LIKE_END_SING_2');
+            else{
+                    $like_user_url = Config::URL_ROOT . Routes::getPage('student', array('username' => $comment_like['username']));
+                    $name[] = '<a href="' . $like_user_url . '" class="post-comment-username">' . htmlspecialchars($comment_like['firstname'] . ' ' . $comment_like['lastname']) . '</a>';
+            }
+        }
+        unset($like_user_url);
+        unset($comment_like);
+?>
+                        <div id="post-com-like-all-<?php echo $comment['id']; ?>" class="hidden-like-box  hidden"><?php echo implode('<br />', $name); ?></div>
+<?php
+    }
+?>
 					</div>
 				</div>
 			</div>
