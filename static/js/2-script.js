@@ -415,6 +415,49 @@ var Post = {
 };
 
 
+var Like = {
+    initPostLike: function(post_id){
+        var obj = {};
+        if(Post.currentPhoto != -1)
+            obj.attachment = Post.photos[Post.currentPhoto].id;
+        new Request({
+            url: 'ajax/like/'+post_id+'/add',
+            onSuccess: function(data){
+                if(data == 'true'){
+                    // On Change de Bouton de Like->Unlike
+                    $('post-like-link-'+post_id).addClass('hidden');
+                    $('post-unlike-link-'+post_id).removeClass('hidden');
+                    // On Affiche le tout
+                    $('post-like-'+post_id).removeClass('hidden');
+                    $('new-like-container-'+post_id).removeClass('hidden');
+                }
+            }
+        }).post(obj);
+    },
+    initPostUnlike: function(post_id){
+        var obj = {};
+        if(Post.currentPhoto != -1)
+            obj.attachment = Post.photos[Post.currentPhoto].id;
+        new Request({
+            url: 'ajax/like/'+post_id+'/delete',
+            onSuccess: function(data){
+                if(data  == 'true'){
+                    $('post-like-link-'+post_id).removeClass('hidden');
+                    $('post-unlike-link-'+post_id).addClass('hidden');
+                    $('new-like-container-'+post_id).addClass('hidden');
+                    if($('post-like-'+post_id).getElements("a").length == 0)
+                        $('post-like-'+post_id).addClass('hidden');
+                }
+            }
+        }).post(obj);
+    },
+    showAll : function(post_id){
+        $('like-show-short-'+post_id).destroy();
+        $('like-show-all-'+post_id).removeClass("hidden");
+    }
+};
+
+
 var Comment = {
 	init : function(e){
 		if(e == null)
