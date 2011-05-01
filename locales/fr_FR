@@ -16,7 +16,8 @@ NAV_SIGNIN
 	Connexion
 LAYOUT_SEARCH_FIELD
 	Rechercher
-
+NAV_ISEP_OR
+        Les Isep d'Or
 
 ### Controller: Page
 
@@ -64,21 +65,25 @@ POST_UNLIKE_LINK
 POST_LIKE_USER
 	Vous
 POST_LIKE_LASTSEP
-    et 
+        et 
 POST_LIKE_SEPARATOR
-    ,
-POST_LIKE_END_PLURAL_1
-    aiment ça.
-POST_LIKE_END_PLURAL_2
-    aimez ça.
-POST_LIKE_END_SING_2
-    aimez.
-POST_LIKE_END_SING_1
-    aime ça.
+        ,
+POST_LIKE_END_THIS
+        ça.
+POST_LIKE_END_LIKE
+        aime
+POST_LIKE_CONJ[]
+        z
+POST_LIKE_CONJ[]
+        nt
+POST_LIKE_PLURAL_CONJ
+        s
 POST_LIKE_OTHER_PLURAL
-    personnes
+        personnes
 POST_LIKE_OTHER_SING
-    une personne
+        une personne
+POST_LIKE_STRING
+        personne
 POST_PRIVATE
 	Visible uniquement par les élèves
 POST_SHOW_MORE
