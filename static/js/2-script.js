@@ -903,7 +903,7 @@ var Extra = {
             extra = (extra.length == 0) ? '': extra;
             new Meio.Autocomplete(el, 'ajax/isepor/autocomplete', {
                 delay: 200,
-                minChars: 1,
+                minChars: 0,
                 cacheType: 'own',
                 cacheLength: 100,
                 maxVisibleItems: 10,
@@ -922,6 +922,7 @@ var Extra = {
                     $('question-'+val+'-error-emp').addClass('hidden');
                     $('question-'+val+'-error-nan').addClass('hidden');
                     $('question-'+val+'-valid').set('value', value.valid);
+                    $('question-'+val+'-valid').set('name', 'valid-'+value.tableName+'-'+val);
                 }, // this event is fired when you select an option
                 onDeselect: function(elements){
                     //alert('Deselected : '+elements);
@@ -1072,14 +1073,33 @@ window.addEvent("domready", function(){
 // Video auto-resizing
 window.addEvent("resize", resizeVideos);
 
-$('form-isepor-first').addEvent('submit', function(e) {
-    $$('#isepor .valid').each(function(el){
-        if (typeOf(el.get('value'))=='undefined' || !el.get('value') || el.get('value').trim().length == 0) {
-            var val = el.getParent().get('itemid');
-            $('question-'+val+'-error-com').addClass('hidden');
-            $('question-'+val+'-error-nan').addClass('hidden');
-            $('question-'+val+'-error-emp').removeClass('hidden');
-            new Event(e).stop();
-        }
-    });
+// Field Verif For Isep Live's poll Isep D'Or
+
+window.addEvent('submit', function(e) {
+    if($('form-isepor-first')){
+        $$('#isepor .valid').each(function(el){
+            if (typeOf(el.get('value'))=='undefined' || !el.get('value') || el.get('value').trim().length == 0) {
+                var val = el.getParent().get('itemid');
+                $('question-'+val+'-error-com').addClass('hidden');
+                $('question-'+val+'-error-nan').addClass('hidden');
+                $('question-'+val+'-error-emp').removeClass('hidden');
+                new Event(e).stop();
+            }
+        });
+    } else if($('form-isepor-final')){
+        $$('#isepor .valid').each(function(el){
+            var val = el.get('itemid');
+            var valid = false;
+            $$('#question-'+val+' input[type=radio]').each(function(el){
+                if(el.checked)
+                    valid = true;
+            });
+            if(!valid) {
+                $('question-'+val+'-error-emp').removeClass('hidden');
+                new Event(e).stop();
+            } else {
+                $('question-'+val+'-error-emp').addClass('hidden');
+            }
+        });
+    }
 });
