@@ -16,7 +16,8 @@ NAV_SIGNIN
 	Connexion
 LAYOUT_SEARCH_FIELD
 	Rechercher
-
+NAV_ISEP_OR
+        Les Isep d'Or
 
 ### Controller: Page
 
@@ -64,21 +65,25 @@ POST_UNLIKE_LINK
 POST_LIKE_USER
 	Vous
 POST_LIKE_LASTSEP
-    et 
+        et 
 POST_LIKE_SEPARATOR
-    ,
-POST_LIKE_END_PLURAL_1
-    aiment ça.
-POST_LIKE_END_PLURAL_2
-    aimez ça.
-POST_LIKE_END_SING_2
-    aimez.
-POST_LIKE_END_SING_1
-    aime ça.
+        ,
+POST_LIKE_END_THIS
+        ça.
+POST_LIKE_END_LIKE
+        aime
+POST_LIKE_CONJ[]
+        z
+POST_LIKE_CONJ[]
+        nt
+POST_LIKE_PLURAL_CONJ
+        s
 POST_LIKE_OTHER_PLURAL
-    personnes
+        personnes
 POST_LIKE_OTHER_SING
-    une personne
+        une personne
+POST_LIKE_STRING
+        personne
 POST_PRIVATE
 	Visible uniquement par les élèves
 POST_SHOW_MORE
@@ -563,3 +568,19 @@ DATE_EVENT_TYPE1
 	{day} {date} {month} {year}, de {hour1}:{min1} à {hour2}:{min2}
 DATE_EVENT_TYPE2
 	Du {day1} {date1} {month1} {year1} à {hour1}:{min1} au {day2} {date2} {month2} {year2} à {hour2}:{min2}
+
+#Extra : ISEP D'OR
+ISEPOR_TITLE
+        Les Isep d'Or ! Votez pour vos personnalité preferée !
+ISEPOR_ERROR_AUTOCOMPLETE
+        Erreur, Ce champs doit être autocompleté.
+ISEPOR_ERROR_NOT_EXIST
+        Erreur, Votre recherche n'a pas aboutie.
+ISEPOR_ERROR_EMPTY
+        Erreur, Ce champs n'est pas valide.
+ISEPOR_VOTE_OK
+        Merci, Votre vote à bien été enregistré.
+ISEPOR_BACK_HOME
+        Revenir à l'accueil.
+ISEPOR_TEXT
+        Cette année encore, les ISEP d'or vont vous permettre de faire entendre votre voix. Vous pensez que votre meilleur pote est un mec en or? Que votre voisine est une vraie catin? Alors n'hésitez pas et élisez ceux qui ont, pour vous, marqué cette année !

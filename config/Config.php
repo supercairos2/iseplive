@@ -94,9 +94,9 @@ final class Config extends ConfigAbstract {
 	
 	// Number of displayed posts
 	const POST_DISPLAYED = 10;
-
-    // Number of displayed likes
-    const LIKE_DISPLAYED = 2;
+        
+        // Number of displayed like
+        const LIKE_DISPLAYED = 2;
 	
 	// Number of displayed photos per post in the timeline
 	const PHOTOS_PER_POST = 3;
@@ -110,6 +110,8 @@ final class Config extends ConfigAbstract {
 	
 	// Debug mode
 	const DEBUG			= true;
+        
+        const ISEP_OR_STATE = 1; // 0 -> Rien, 1-> Etape 1, 2-> Round 2, 3-> Resultat
 }
 
 

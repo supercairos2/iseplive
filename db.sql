@@ -82,6 +82,84 @@ CREATE TABLE `groups_users` (
   CONSTRAINT `groups_users_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_associations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_associations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `extra` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_employees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(10) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `extra` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_event`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `extra` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `questions` varchar(50) NOT NULL,
+  `position` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `extra` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_round1`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_round1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isepdor_questions_id` int(11) NOT NULL,
+  `voting_user_id` int(11) NOT NULL,
+  `student_username` varchar(50) DEFAULT NULL,
+  `isepdor_employees_id` int(11) DEFAULT NULL,
+  `isepdor_associations_id` int(11) DEFAULT NULL,
+  `isepdor_event_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `voting_user_id` (`voting_user_id`,`isepdor_questions_id`),
+  KEY `isepdor_employees_id` (`isepdor_employees_id`),
+  KEY `isepdor_event_id` (`isepdor_event_id`),
+  KEY `isepdor_associations_id` (`isepdor_associations_id`),
+  KEY `student_number` (`student_username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `isepdor_round2`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `isepdor_round2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isepdor_questions_id` int(11) NOT NULL,
+  `voting_user_id` int(11) NOT NULL,
+  `student_username` varchar(50) DEFAULT NULL,
+  `isepdor_employees_id` int(11) DEFAULT NULL,
+  `isepdor_associations_id` int(11) DEFAULT NULL,
+  `isepdor_event_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `voting_user_id` (`voting_user_id`,`isepdor_questions_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `post_comment_likes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -131,10 +209,10 @@ CREATE TABLE `post_likes` (
   KEY `user_id` (`user_id`),
   KEY `post_id` (`post_id`),
   KEY `attachment_id` (`attachment_id`),
-  CONSTRAINT `post_likes_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   CONSTRAINT `post_likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`attachment_id`) REFERENCES `attachments` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`attachment_id`) REFERENCES `attachments` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `post_likes_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

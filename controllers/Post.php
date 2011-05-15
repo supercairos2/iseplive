@@ -148,7 +148,7 @@ class Post_Controller extends Controller {
 		$is_admin = $is_logged && User_Model::$auth_data['admin']=='1';
 		
 		try {
-			$post = $this->model->getPost((int) $params['id'], $is_logged ? null : true, $is_student);
+			$post = $this->model->getPost((int) $params['id']);
 			if(!$is_logged && $post['official'] == '0')
 				throw new Exception('You must be logged');
 			if(!$is_student && $post['private'] == '1')
