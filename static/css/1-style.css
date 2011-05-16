@@ -363,8 +363,9 @@ h1, h1 a, h1 a:hover, h1 a:visited, h1 a:active, h1 a:focus {
 }
 
 .inline-like{
-    background: transparent url("../images/icons/likestar.png") 0px 1px no-repeat;
-    padding-left: 13px !important;
+    background: transparent url("../images/icons/like.png") 0px 1px no-repeat;
+    padding-left: 18px !important;
+    white-space: nowrap;
 }
 
 .timeline .video {
