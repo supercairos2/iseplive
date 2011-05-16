@@ -80,7 +80,7 @@ class Layout_Controller extends Controller {
 		
 		// JS
 		if(File::exists(Config::DIR_APP_STATIC.'js/script.js')){
-			$this->addJSFile(Config::URL_STATIC.'js/script.js');
+			$this->addJSFile(Config::URL_STATIC.'js/script.js?'.filesize(Config::DIR_APP_STATIC.'js/script.js'));
 		}else{
 			$files = glob(Config::DIR_APP_STATIC.'js/[0-9]-*.js');
 			foreach($files as $file)
@@ -92,7 +92,7 @@ class Layout_Controller extends Controller {
 		
 		// CSS
 		if(File::exists(Config::DIR_APP_STATIC.'css/style.css')){
-			$this->addCSSFile(Config::URL_STATIC.'css/style.css');
+			$this->addCSSFile(Config::URL_STATIC.'css/style.css?'.filesize(Config::DIR_APP_STATIC.'css/style.css'));
 		}else{
 			$files = glob(Config::DIR_APP_STATIC.'css/[0-9]-*.css');
 			foreach($files as $file)
