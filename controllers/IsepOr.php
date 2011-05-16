@@ -5,7 +5,7 @@ class IsepOr_Controller extends Controller {
         $this->setView('firstRound.php');
 
         if (!isset(User_Model::$auth_data))
-            throw new Exception('You must be logged in');
+            throw new ActionException('User', 'signin', array('redirect' => $_SERVER['REQUEST_URI']));
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 1 && User_Model::$auth_data['admin'] != '1')
@@ -39,7 +39,7 @@ class IsepOr_Controller extends Controller {
         $this->setView('finalRound.php');
 
         if (!isset(User_Model::$auth_data))
-            throw new Exception('You must be logged in');
+            throw new ActionException('User', 'signin', array('redirect' => $_SERVER['REQUEST_URI']));
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 2 && User_Model::$auth_data['admin'] != '1')
@@ -88,7 +88,7 @@ class IsepOr_Controller extends Controller {
         $this->setView('result.php');
 
         if (!isset(User_Model::$auth_data))
-            throw new Exception('You must be logged in');
+            throw new ActionException('User', 'signin', array('redirect' => $_SERVER['REQUEST_URI']));
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 2 && User_Model::$auth_data['admin'] != '1')
