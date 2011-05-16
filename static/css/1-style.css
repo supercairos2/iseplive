@@ -806,6 +806,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     height: 72%;
     padding: 3px;
     font-weight: bold;
+    line-height: 0.9em;
 }
 
 .clear{

@@ -1,23 +1,13 @@
-<?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
 <div id="isepor">
-    <h1><?php echo __('ISEPOR_TITLE'); ?></h1>
-    <p style="width: 500px;  margin-bottom: 20px;">
-        <?php echo __('ISEPOR_TEXT'); ?>
-    </p>
+    <h1><?php echo __('ISEPOR_TITLE_RESULTS'); ?></h1>
     <?php foreach($questions as $question): ?>
-        <div id="question-<?php echo $question['id'] ?>">
-            <h2><?php echo htmlspecialchars($question['questions']) ?> <i>(<?php echo (int) $countUser[$question['id']]; ?>)</i>:</h2>
+        <div id="question-<?php echo $question['id'] ?>" style="line-height: 1.6em;">
+            <h2><?php echo htmlspecialchars($question['questions']) ?> :</h2>
             <?php foreach($datas[$question['id']] as $key => $data): ?>
                 <?php $pourcent = ((((int) $data['cmpt'])*100)/((int) $countUser[$question['id']])); ?>
                 <div class="progressBarOutter">
                     <div class="progressBarInner" style="width: <?php echo $pourcent*2.44; ?>px">
-                        <?php echo $pourcent; ?> % | <?php echo __('POST_SURVEY_NB_VOTES', array('votes' => (int) $data['cmpt'])); ?>
+                        <?php echo __('POST_SURVEY_NB_VOTES', array('perc' => $pourcent, 'votes' => (int) $data['cmpt'])); ?>
                     </div>
                 </div>
                 <div style="padding: 6px; float:left; width: 400px; margin-left: 10px; margin: 5px;">

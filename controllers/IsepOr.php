@@ -1,17 +1,20 @@
 <?php
 class IsepOr_Controller extends Controller {
     
-    public function draft() {
-        
-        $this->setView('draft.php');
+    public function firstRound() {
+        $this->setView('firstRound.php');
+
         if (!isset(User_Model::$auth_data))
             throw new Exception('You must be logged in');
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 1 && User_Model::$auth_data['admin'] != '1')
             throw new Exception('It\'s not ready for Prime Time');
-        if($this->model->checkVote(User_Model::$auth_data['id'], 1) > 0)
-            throw new Exception('You already voted !');
+        if($this->model->checkVote(User_Model::$auth_data['id'], 1) > 0){
+            $this->set('empty_post', false);
+            return;
+        }
+        
         try {
             if(empty($_POST)){
                 if(User_Model::$auth_data['admin'] == '1')
@@ -19,14 +22,12 @@ class IsepOr_Controller extends Controller {
                 if(!Cache::read('IsepOrQuestions'))
                     Cache::write('IsepOrQuestions', $this->model->fetchQuestions(), 11250);
                 $this->set(array(
-                            'questions'  => Cache::read('IsepOrQuestions'),
-                            'empty_post' => true
+                    'questions'  => Cache::read('IsepOrQuestions'),
+                    'empty_post' => true
                 ));
             } else {
                 $this->model->save($_POST, 1);
-                $this->set(array(
-                    'empty_post' => false
-                ));
+                $this->set('empty_post', false);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -35,16 +36,19 @@ class IsepOr_Controller extends Controller {
     }
     
     public function finalRound() {
-        
         $this->setView('finalRound.php');
+
         if (!isset(User_Model::$auth_data))
             throw new Exception('You must be logged in');
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 2 && User_Model::$auth_data['admin'] != '1')
             throw new Exception('It\'s not ready for Prime Time');
-        if($this->model->checkVote(User_Model::$auth_data['id'], 2) > 0)
-            throw new Exception('You already voted !');
+        if($this->model->checkVote(User_Model::$auth_data['id'], 2) > 0){
+            $this->set('empty_post', false);
+            return;
+        }
+
         try {
             if(empty($_POST)){
                 if(User_Model::$auth_data['admin'] == '1')
@@ -72,9 +76,7 @@ class IsepOr_Controller extends Controller {
                 ));
             } else {
                 $this->model->save($_POST, 2);
-                $this->set(array(
-                    'empty_post' => false
-                ));
+                $this->set('empty_post', false);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -83,14 +85,15 @@ class IsepOr_Controller extends Controller {
     }
     
     public function result() {
-        
         $this->setView('result.php');
+
         if (!isset(User_Model::$auth_data))
             throw new Exception('You must be logged in');
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 2 && User_Model::$auth_data['admin'] != '1')
             throw new Exception('It\'s not ready for Prime Time');
+
         if(User_Model::$auth_data['admin'] == '1')
             Cache::delete('IsepOrResults');
         if (!Cache::read('IsepOrResults')) {
@@ -118,24 +121,25 @@ class IsepOr_Controller extends Controller {
             Cache::write('IsepOrCount', $data, 11250);
          }           
         $this->set(array(
-                'countUser' => Cache::read('IsepOrCount'),
-                'datas'     => Cache::read('IsepOrResults'),
-                'questions' => Cache::read('IsepOrQuestions')
+            'countUser' => Cache::read('IsepOrCount'),
+            'datas'     => Cache::read('IsepOrResults'),
+            'questions' => Cache::read('IsepOrQuestions')
         ));
     }
     
     /**
      * Isep d'Or Special Autocomplete
      */
-        
     public function IsepOrAutocomplete(){
         $this->setView('autocomplete.php');
+
         if (!isset(User_Model::$auth_data))
             throw new Exception('You must be logged in');
         if (!isset(User_Model::$auth_data['student_number']))
             throw new Exception('You must be a student to see this');
         if(!isset($_GET['q']) && !isset($_GET['type']))
             throw new Exception('Query parameter "q" or "type" not set');
+
         try {
             $limit = isset($_GET['limit']) && ctype_digit($_GET['limit']) ? (int) $_GET['limit'] : 10;
             $data = array();
@@ -163,7 +167,7 @@ class IsepOr_Controller extends Controller {
                 }
             }
             $this->set(array(
-                        'data'	=> $data
+                'data'	=> $data
             ));
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -171,8 +175,7 @@ class IsepOr_Controller extends Controller {
     }
     
     
-   static private function __array_rePad(array $array, array $array2) {
-       
+    static private function __array_rePad(array $array, array $array2) {
        $array = array_values($array);
        $array2 = array_values($array2);
        $nb = count($array)+1;
@@ -182,7 +185,7 @@ class IsepOr_Controller extends Controller {
        return array_values($array);
     }
     
-   static private function __array_orderby() {
+    static private function __array_orderby() {
         $args = func_get_args();
         $data = array_shift($args);
         foreach ($args as $n => $field) {
@@ -191,12 +194,12 @@ class IsepOr_Controller extends Controller {
                 foreach ($data as $key => $row)
                     $tmp[$key] = $row[$field];
                 $args[$n] = $tmp;
-                }
+            }
         }
-        $args[] = &$data;
-        call_user_func_array('array_multisort', $args);
-        return array_pop($args);
+        //$args[] = &$data;
+        //call_user_func_array('array_multisort', $args);
+        array_multisort($args[0], $args[1], $data);
+        return $data;
     }
     
 }
-?>

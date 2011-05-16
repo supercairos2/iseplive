@@ -17,7 +17,7 @@ NAV_SIGNIN
 LAYOUT_SEARCH_FIELD
 	Rechercher
 NAV_ISEP_OR
-        Les Isep d'Or
+	ISEP d'OR
 
 ### Controller: Page
 
@@ -99,7 +99,7 @@ POST_PHOTOS_ALBUM
 POST_SURVEY_ENDING_DATE
 	Date de fin :
 POST_SURVEY_NB_VOTES
-	({votes} votes)
+	{perc} % ({votes} votes)
 POST_SURVEY_SUBMIT
 	Voter
 POST_SURVEY_SHOW_VOTE
@@ -571,16 +571,16 @@ DATE_EVENT_TYPE2
 
 #Extra : ISEP D'OR
 ISEPOR_TITLE
-        Les Isep d'Or ! Votez pour vos personnalité preferée !
+        Les ISEP d'OR ! Votez pour vos personnalités préférées !
 ISEPOR_ERROR_AUTOCOMPLETE
-        Erreur, Ce champs doit être autocompleté.
+        Erreur, Ce champ doit être autocompleté.
 ISEPOR_ERROR_NOT_EXIST
-        Erreur, Votre recherche n'a pas aboutie.
+        Erreur, votre recherche n'a pas abouti.
 ISEPOR_ERROR_EMPTY
-        Erreur, Ce champs n'est pas valide.
+        Erreur, ce champ n'est pas valide.
 ISEPOR_VOTE_OK
-        Merci, Votre vote à bien été enregistré.
-ISEPOR_BACK_HOME
-        Revenir à l'accueil.
+        Merci, votre vote à bien été enregistré !
 ISEPOR_TEXT
-        Cette année encore, les ISEP d'or vont vous permettre de faire entendre votre voix. Vous pensez que votre meilleur pote est un mec en or? Que votre voisine est une vraie catin? Alors n'hésitez pas et élisez ceux qui ont, pour vous, marqué cette année !
+        Cette année encore, les ISEP d'OR vont vous permettre de faire entendre votre voix. Vous pensez que votre meilleur pote est un mec en or ? Que votre voisine est une vraie catin ? Alors n'hésitez pas et élisez ceux qui ont, pour vous, marqué cette année !
+ISEPOR_TITLE_RESULTS
+    Les résultats des ISEP d'OR !

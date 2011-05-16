@@ -322,23 +322,24 @@ final class Routes extends RoutesAbstract {
 			'vars'		=> 'controller=Search&action=autocomplete&mode=json',
 			'url'		=> 'ajax/autocomplete'
 		),
-                // Extra : Isep D'OR
-                'isep_or_1'	=> array(
+
+        // Extra : Isep D'OR
+        'isep_or_1'	=> array(
 			'regexp'	=> '^isep-d-or$',
-			'vars'		=> 'controller=IsepOr&action=draft',
+			'vars'		=> 'controller=IsepOr&action=firstRound',
 			'url'		=> 'isep-d-or'
 		),
-                'isep_or_2'	=> array(
+        'isep_or_2'	=> array(
 			'regexp'	=> '^isep-d-or/final$',
 			'vars'		=> 'controller=IsepOr&action=finalRound',
 			'url'		=> 'isep-d-or/final'
 		),
-                'isep_or_3'	=> array(
+        'isep_or_3'	=> array(
 			'regexp'	=> '^isep-d-or/result$',
 			'vars'		=> 'controller=IsepOr&action=result',
-			'url'		=> 'isep-d-or/result$'
+			'url'		=> 'isep-d-or/result'
 		),
-                'autocomplete_isepor'	=> array(
+        'autocomplete_isepor'	=> array(
 			'regexp'	=> '^ajax/isepor/autocomplete(?=\?|$)',
 			'vars'		=> 'controller=IsepOr&action=IsepOrAutocomplete&mode=json',
 			'url'		=> 'ajax/isepor/autocomplete'

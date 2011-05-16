@@ -6,7 +6,8 @@ class IsepOr_Model extends Model {
         $questions = DB::select('
 			SELECT id, questions, type, extra
 			FROM isepdor_questions
-                        ORDER BY position ASC;');
+            ORDER BY position ASC
+        ');
         
         return $questions;
     }
@@ -14,87 +15,89 @@ class IsepOr_Model extends Model {
     public function fetchFinals($id, $type, $step = 1) {
         
         switch ($type) {
-                    case 'events':
-                        $questions = DB::select('
-                            SELECT s.name as name, s.id as valid, COUNT( * ) AS cmpt, \'events\' AS tableName
-                            FROM isepdor_round'.(int) $step.' r
-                            INNER JOIN isepdor_event s ON r.isepdor_event_id = s.id
-                            WHERE r.isepdor_questions_id = :id
-                            GROUP BY r.isepdor_event_id
-                            ORDER BY cmpt DESC
-                            LIMIT 0,3;
-                        ', array(
-                            'id' => (int) $id
-                        ));
-                        return $questions;
-                        break;
-                    case 'students':
-                        $questions = DB::select('
-                            SELECT s.username as valid, CONCAT(s.firstname," ",s.lastname) as name, COUNT( * ) AS cmpt, \'students\' AS tableName
-                            FROM isepdor_round'.(int) $step.' r
-                            INNER JOIN students s ON r.student_username = s.username
-                            WHERE r.isepdor_questions_id = :id
-                            GROUP BY r.student_username
-                            ORDER BY cmpt DESC
-                            LIMIT 0,3;
-                        ', array(
-                            'id' => (int) $id
-                        ));
-                        return $questions;
-                        break;
-                    case 'employees':
-                         $questions = DB::select('
-                            SELECT s.id as valid, CONCAT(s.firstname," ",s.lastname) as name, COUNT( * ) AS cmpt, \'employees\' AS tableName
-                            FROM isepdor_round'.(int) $step.' r
-                            INNER JOIN isepdor_employees s ON r.isepdor_employees_id = s.id
-                            WHERE r.isepdor_questions_id = :id
-                            GROUP BY r.isepdor_employees_id
-                            ORDER BY cmpt DESC
-                            LIMIT 0,3;
-                        ', array(
-                            'id' => (int) $id
-                        ));
-                        return $questions;
-                        break;
-                    case 'associations':
-                         $questions = DB::select('
-                            SELECT s.name as name, s.id as valid, COUNT( * ) AS cmpt, \'associations\' AS tableName
-                            FROM isepdor_round'.(int) $step.' r
-                            INNER JOIN isepdor_associations s ON r.isepdor_associations_id = s.id
-                            WHERE r.isepdor_questions_id = :id
-                            GROUP BY r.isepdor_associations_id
-                            ORDER BY cmpt DESC
-                            LIMIT 0,3;
-                        ', array(
-                            'id' => (int) $id
-                        ));
-                         return $questions;
-                        break;
-                    default:
-                        throw new Exception('Error, Please try again.'.$type);
-                        break;
+            case 'events':
+                $questions = DB::select('
+                SELECT s.name as name, s.id as valid, COUNT( * ) AS cmpt, \'events\' AS tableName
+                FROM isepdor_round'.(int) $step.' r
+                INNER JOIN isepdor_event s ON r.isepdor_event_id = s.id
+                WHERE r.isepdor_questions_id = :id
+                GROUP BY r.isepdor_event_id
+                ORDER BY cmpt DESC
+                LIMIT 0,3
+                ', array(
+                'id' => (int) $id
+                ));
+                return $questions;
+
+            case 'students':
+                $questions = DB::select('
+                SELECT s.username as valid, CONCAT(s.firstname," ",s.lastname) as name, COUNT( * ) AS cmpt, \'students\' AS tableName
+                FROM isepdor_round'.(int) $step.' r
+                INNER JOIN students s ON r.student_username = s.username
+                WHERE r.isepdor_questions_id = :id
+                GROUP BY r.student_username
+                ORDER BY cmpt DESC
+                LIMIT 0,3
+                ', array(
+                'id' => (int) $id
+                ));
+                return $questions;
+
+            case 'employees':
+                $questions = DB::select('
+                SELECT s.id as valid, CONCAT(s.firstname," ",s.lastname) as name, COUNT( * ) AS cmpt, \'employees\' AS tableName
+                FROM isepdor_round'.(int) $step.' r
+                INNER JOIN isepdor_employees s ON r.isepdor_employees_id = s.id
+                WHERE r.isepdor_questions_id = :id
+                GROUP BY r.isepdor_employees_id
+                ORDER BY cmpt DESC
+                LIMIT 0,3
+                ', array(
+                'id' => (int) $id
+                ));
+                return $questions;
+
+            case 'associations':
+                $questions = DB::select('
+                SELECT s.name as name, s.id as valid, COUNT( * ) AS cmpt, \'associations\' AS tableName
+                FROM isepdor_round'.(int) $step.' r
+                INNER JOIN isepdor_associations s ON r.isepdor_associations_id = s.id
+                WHERE r.isepdor_questions_id = :id
+                GROUP BY r.isepdor_associations_id
+                ORDER BY cmpt DESC
+                LIMIT 0,3
+                ', array(
+                'id' => (int) $id
+                ));
+                return $questions;
+
+            default:
+                throw new Exception('Error, Please try again. ('.$type.')');
+                break;
         }
     }
     
     public function countUser(){
-        
         $questions = DB::select('
-                        SELECT COUNT( * ) AS `Lignes` , `s`.`isepdor_questions_id`
-                        FROM `isepdor_round2` s
-                        GROUP BY s.`isepdor_questions_id`
-                        ORDER BY s.`isepdor_questions_id`;
-                        ');
-        
+            SELECT COUNT( * ) AS `Lignes` , `s`.`isepdor_questions_id`
+            FROM `isepdor_round2` s
+            GROUP BY s.`isepdor_questions_id`
+            ORDER BY s.`isepdor_questions_id`
+        ');
         return $questions;
-
     }
     
     public function searchUsers($query, $limit, $promo = null) {
-        if(strpos(',', $promo))
-            $promo = implode (', ', Search_Model::sanitize($promo));
-        else if(!empty($promo))
-           $promo = (int) Search_Model::sanitize($promo);
-        else{
+        if(strpos(',', $promo) !== false){
+            $promo = explode(',', $promo);
+            foreach($promo as &$promo_){
+                if(ctype_digit(trim($promo)))
+                    $promo_ = trim($promo_);
+            }
+            $promo = implode (', ', $promo);
+        }else if(is_int($promo) || ctype_digit($promo)){
+            $promo = (int) $promo;
+        }else{
             for($i = 0; $i < 5; $i++)
                 $promo[] = date('Y')+$i;
             $promo = implode (', ', $promo);
@@ -102,49 +105,50 @@ class IsepOr_Model extends Model {
         $students = DB::select('
 			SELECT s.username AS valid, CONCAT(s.firstname," ",s.lastname) AS shows, \'students\' AS tableName
 			FROM students s
-                        WHERE CONCAT(s.firstname," ",s.lastname) LIKE "'.Search_Model::sanitize($query).'%"
+            WHERE CONCAT(s.firstname," ",s.lastname) LIKE "%'.self::sanitizeSearch($query).'%"
 			AND promo IN ('.$promo.')
-                        ORDER BY s.promo ASC
-                        LIMIT 0,'.$limit.';');
+            ORDER BY s.promo ASC
+            LIMIT 0,'.$limit
+        );
         
         return $students;
     }
     
      public function searchEvents($query, $limit, $extra = null) {
-
         $students = DB::select('
 			SELECT id AS valid, name AS shows, \'events\' AS tableName
 			FROM isepdor_event
-                        WHERE name LIKE "'.Search_Model::sanitize($query).'%"
-                       '.(!empty($extra) ? 'AND extra = "'.Search_Model::sanitize($extra).'"' : '').'
-                        ORDER BY isepdor_event.id ASC
-                        LIMIT 0,'.$limit.';');
+            WHERE name LIKE "%'.self::sanitizeSearch($query).'%"
+            '.(!empty($extra) ? 'AND extra = '.DB::quote($extra) : '').'
+            ORDER BY isepdor_event.id ASC
+            LIMIT 0,'.$limit
+        );
         
         return $students;
     }
     
     public function searchAssociations($query, $limit, $extra = null) {
-
         $students = DB::select('
 			SELECT id AS valid, name AS shows, \'associations\' AS tableName
 			FROM isepdor_associations
-                        WHERE name LIKE "'.Search_Model::sanitize($query).'%"
-                       '.(!empty($extra) ? 'AND extra = "'.Search_Model::sanitize($extra).'"' : '').'
-                        ORDER BY isepdor_associations.id ASC
-                        LIMIT 0,'.$limit.';');
+            WHERE name LIKE "%'.self::sanitizeSearch($query).'%"
+            '.(!empty($extra) ? 'AND extra = '.DB::quote($extra) : '').'
+            ORDER BY isepdor_associations.id ASC
+            LIMIT 0,'.$limit
+        );
         
         return $students;
     }
     
     public function searchEmployees($query, $limit, $extra = null) {
-
         $students = DB::select('
 			SELECT s.id AS valid, CONCAT(s.firstname," ",s.lastname) AS shows, \'employees\' AS tableName
 			FROM isepdor_employees s
-                        WHERE CONCAT(s.firstname," ",s.lastname) LIKE "%'.Search_Model::sanitize($query).'%"
-                       '.(!empty($extra) ? 'AND extra = "'.Search_Model::sanitize($extra).'"' : '').'
-                        ORDER BY s.id ASC
-                        LIMIT 0,'.$limit.';');
+            WHERE CONCAT(s.firstname," ",s.lastname) LIKE "%'.self::sanitizeSearch($query).'%"
+            '.(!empty($extra) ? 'AND extra = '.DB::quote($extra) : '').'
+            ORDER BY s.id ASC
+            LIMIT 0,'.$limit
+        );
         
         return $students;
     }
@@ -152,15 +156,14 @@ class IsepOr_Model extends Model {
     public function checkVote($user_id, $step = 1){
         $students = DB::execute('
 			SELECT id
-                        FROM isepdor_round'.(int) $step.'
-                        WHERE `voting_user_id` = '.(int) $user_id.'
-                        ');
+            FROM isepdor_round'.(int) $step.'
+            WHERE `voting_user_id` = ?
+        ', array((int) $user_id));
         
         return $students->rowCount();
     }
     
     public function save($data, $step){
-        
         $sql = array();
         foreach ($data as $key => $value){
             $new_key = preg_replace ('#valid-#', '', $key);
@@ -170,7 +173,7 @@ class IsepOr_Model extends Model {
                         $sql[] = '('.(int) $matches[2].','.User_Model::$auth_data['id'].', NULL, NULL, NULL, '.(int) $value.')';
                         break;
                     case 'students':
-                        $sql[] = '('.(int) $matches[2].','.User_Model::$auth_data['id'].', "'.Search_Model::sanitize($value).'", NULL, NULL, NULL)';
+                        $sql[] = '('.(int) $matches[2].','.User_Model::$auth_data['id'].', '.DB::quote($value).', NULL, NULL, NULL)';
                         break;
                     case 'employees':
                          $sql[] = '('.(int) $matches[2].','.User_Model::$auth_data['id'].', NULL, '.(int) $value.', NULL, NULL)';
@@ -187,11 +190,19 @@ class IsepOr_Model extends Model {
             }
         }
         $data = DB::execute('
-                    INSERT INTO `isepdor_round'.(int) $step.'` (`isepdor_questions_id`, `voting_user_id`, `student_username`, `isepdor_employees_id`, `isepdor_associations_id`, `isepdor_event_id`) VALUES
-                    '.implode(',',$sql).';
-                        
-            ');
+            INSERT INTO `isepdor_round'.(int) $step.'` (`isepdor_questions_id`, `voting_user_id`, `student_username`, `isepdor_employees_id`, `isepdor_associations_id`, `isepdor_event_id`)
+            VALUES '.implode(',', $sql)
+        );
     }
-}
 
-?>
+
+    public static function sanitizeSearch($txt){
+		$txt = Text::removeAccents($txt);
+        $txt = strtolower($txt);
+		$txt = preg_replace('#[^a-z0-9]#i', ' ', $txt);
+		$txt = preg_replace('# +#', ' ', $txt);
+		$txt = trim($txt);
+		return $txt;
+	}
+
+}

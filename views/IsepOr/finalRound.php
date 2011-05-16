@@ -4,7 +4,7 @@
     <p style="width: 500px;  margin-bottom: 20px;">
         <?php echo __('ISEPOR_TEXT'); ?>
     </p>
-    <form method="post" action="http://localhost/iseplive/app/isep-d-or/final" id="form-isepor-final" >
+    <form method="post" action="<?php echo Config::URL_ROOT.Routes::getPage('isep_or_2'); ?>" id="form-isepor-final" >
     <?php foreach($questions as $question): ?>
         <div id="question-<?php echo $question['id'] ?>">
             <h2><?php echo htmlspecialchars($question['questions']) ?> :</h2>
@@ -24,11 +24,8 @@
     </form>
 </div>
 <?php else : ?>
-<div >
+<div style="text-align: center;">
     <h1><?php echo __('ISEPOR_VOTE_OK'); ?></h1>
-    <p style="margin: 0 auto; width: 260px;" >
-        <img src="<?php echo Config::URL_STATIC; ?>images/others/ok.png" alt="Vote Ok !" /><br />
-        <a href="<?php echo Config::URL_ABSOLUTE; ?>"><?php echo __('ISEPOR_BACK_HOME'); ?></a>
-    </p>
+    <img src="<?php echo Config::URL_STATIC; ?>images/others/ok.png" alt="" />
 </div>
 <?php endif; ?>

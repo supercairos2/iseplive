@@ -58,9 +58,11 @@ foreach($cssFiles as $cssFile){
 					<?php if($is_logged){ ?>
 						<?php if($is_student){ ?>
 					<a href="<?php echo Config::URL_ROOT.Routes::getPage('student', array('username' => $username)); ?>"><?php echo __('NAV_PROFILE'); ?></a>
-                                                    <?php if(Config::ISEP_OR_STATE > 0 && Config::ISEP_OR_STATE < 4){ ?>
-                                        <a href="<?php echo Config::URL_ROOT.Routes::getPage('isep_or_'.Config::ISEP_OR_STATE); ?>"><?php echo __('NAV_ISEP_OR'); ?></a>
-						<?php } } ?>
+
+                    <?php if(Config::ISEP_OR_STATE >= 1 && Config::ISEP_OR_STATE <= 3){ ?>
+                    <a href="<?php echo Config::URL_ROOT.Routes::getPage('isep_or_'.Config::ISEP_OR_STATE); ?>"><?php echo __('NAV_ISEP_OR'); ?></a>
+                    <?php } } ?>
+
 					<a href="<?php echo Config::URL_ROOT.Routes::getPage('logout', array('redirect', '/')); ?>"><?php echo __('NAV_LOGOUT'); ?></a>
 					<?php }else{ ?>
 					<a href="<?php echo Config::URL_ROOT.Routes::getPage('signin'); ?>"><?php echo __('NAV_SIGNIN'); ?></a>
