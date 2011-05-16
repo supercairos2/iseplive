@@ -99,7 +99,7 @@ POST_PHOTOS_ALBUM
 POST_SURVEY_ENDING_DATE
 	Date de fin :
 POST_SURVEY_NB_VOTES
-	{perc} % ({votes} votes)
+	({votes} votes)
 POST_SURVEY_SUBMIT
 	Voter
 POST_SURVEY_SHOW_VOTE
@@ -584,3 +584,5 @@ ISEPOR_TEXT
         Cette année encore, les ISEP d'OR vont vous permettre de faire entendre votre voix. Vous pensez que votre meilleur pote est un mec en or ? Que votre voisine est une vraie catin ? Alors n'hésitez pas et élisez ceux qui ont, pour vous, marqué cette année !
 ISEPOR_TITLE_RESULTS
     Les résultats des ISEP d'OR !
+ISEPOR_VOTES_RESULTS
+	{perc} % ({votes} votes)

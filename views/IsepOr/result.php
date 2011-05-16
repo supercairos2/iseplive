@@ -7,7 +7,7 @@
                 <?php $pourcent = ((((int) $data['cmpt'])*100)/((int) $countUser[$question['id']])); ?>
                 <div class="progressBarOutter">
                     <div class="progressBarInner" style="width: <?php echo $pourcent*2.44; ?>px">
-                        <?php echo __('POST_SURVEY_NB_VOTES', array('perc' => $pourcent, 'votes' => (int) $data['cmpt'])); ?>
+                        <?php echo __('ISEPOR_VOTES_RESULTS', array('perc' => $pourcent, 'votes' => (int) $data['cmpt'])); ?>
                     </div>
                 </div>
                 <div style="padding: 6px; float:left; width: 400px; margin-left: 10px; margin: 5px;">
