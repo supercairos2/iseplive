@@ -51,11 +51,14 @@ class IsepOr_Controller extends Controller {
 
         try {
             if(empty($_POST)){
+                Cache::delete('IsepOrQuestionsExtra');
                 if(User_Model::$auth_data['admin'] == '1')
                     Cache::delete('IsepOrFinals');
                 if(!Cache::read('IsepOrFinals')){
                     if(!Cache::read('IsepOrQuestions'))
                         Cache::write('IsepOrQuestions', $this->model->fetchQuestions(), 11250);
+                    if(!Cache::read('IsepOrQuestionsExtra'))
+                        Cache::write('IsepOrQuestionsExtra', $this->model->fetchQuestionsExtra(), 11250);
                     $question = Cache::read('IsepOrQuestions');
                     foreach($question as $value){
                         if(strpos($value['type'], ',')){
@@ -72,7 +75,8 @@ class IsepOr_Controller extends Controller {
                 $this->set(array(
                     'empty_post' => true,
                     'datas' => Cache::read('IsepOrFinals'),
-                    'questions' => Cache::read('IsepOrQuestions')
+                    'questions' => Cache::read('IsepOrQuestions'),
+                    'questionsExtra' => Cache::read('IsepOrQuestionsExtra')
                 ));
             } else {
                 $this->model->save($_POST, 2);
@@ -93,9 +97,12 @@ class IsepOr_Controller extends Controller {
             throw new Exception('You must be a student to see this');
         if(Config::ISEP_OR_STATE !== 2 && User_Model::$auth_data['admin'] != '1')
             throw new Exception('It\'s not ready for Prime Time');
+        if(User_Model::$auth_data['admin'] == '1'){
 
         if(User_Model::$auth_data['admin'] == '1')
             Cache::delete('IsepOrResults');
+            Cache::delete('IsepOrResultsExtra');
+        }
         if (!Cache::read('IsepOrResults')) {
             if (!Cache::read('IsepOrQuestions'))
                 Cache::write('IsepOrQuestions', $this->model->fetchQuestions(), 11250);
@@ -112,18 +119,43 @@ class IsepOr_Controller extends Controller {
             }
             Cache::write('IsepOrResults', $finalList, 11250);
         }
-        Cache::delete('IsepOrCount');
+        if (!Cache::read('IsepOrResultsExtra')) {
+            if(!Cache::read('IsepOrQuestionsExtra'))
+                Cache::write('IsepOrQuestionsExtra', $this->model->fetchQuestionsExtra(), 11250);
+            $question = Cache::read('IsepOrQuestionsExtra');
+            foreach ($question as $value) {
+                if (strpos($value['type'], ',')) {
+                    $data = array();
+                    foreach (explode(',', $value['type']) as $type) {
+                        $data = self::__array_rePad($data, $this->model->fetchFinals($value['id'], $type, 2, true));
+                    }
+                    $finalListExtra[$value['id']] = array_slice(self::__array_orderby($data, 'cmpt', SORT_DESC), 0, 3);
+                } else
+                    $finalListExtra[$value['id']] = $this->model->fetchFinals($value['id'], $value['type'], 2, true);
+            }
+            Cache::write('IsepOrResultsExtra', $finalListExtra, 11250);
+        }
         if(!Cache::read('IsepOrCount')){
             $data = array();
-            foreach (($this->model->countUser()) as $key => $value) {
+            foreach (($this->model->countUser()) as $value) {
                 $data[$value['isepdor_questions_id']] = $value['Lignes'];
             }
             Cache::write('IsepOrCount', $data, 11250);
-         }           
+         }
+         if(!Cache::read('IsepOrCountExtra')){
+            $data = array();
+            foreach (($this->model->countUser(true)) as $value) {
+                $data[$value['isepdor_questions_id']] = $value['Lignes'];
+            }
+            Cache::write('IsepOrCountExtra', $data, 11250);
+         } 
         $this->set(array(
-            'countUser' => Cache::read('IsepOrCount'),
-            'datas'     => Cache::read('IsepOrResults'),
-            'questions' => Cache::read('IsepOrQuestions')
+                'countUser' => Cache::read('IsepOrCount'),
+                'datas'     => Cache::read('IsepOrResults'),
+                'questions' => Cache::read('IsepOrQuestions'),
+                'countUserExtra' => Cache::read('IsepOrCountExtra'),
+                'datasExtra'     => Cache::read('IsepOrResultsExtra'),
+                'questionsExtra' => Cache::read('IsepOrQuestionsExtra')
         ));
     }
     

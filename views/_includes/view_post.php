@@ -292,7 +292,7 @@
             }
             $last = ($has_liked) ? $last + 1 : $last;
             // On fait de belle phrase !
-            if ($last > 2) {
+            if (($last > 1 && !$has_liked) || ($last > 2 && $has_liked)){
                 $name[$last - 1] .= ' ' . __('POST_LIKE_LASTSEP') . ' ' . array_pop($name);
                 unset($name[$last--]);
                 for($i = 1; $i < $last; $i++)
