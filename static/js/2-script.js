@@ -896,12 +896,13 @@ var data = [
         
 var Extra = {
     init : function(){
+        var URL_ROOT = $('header-title').getProperty('href');
         $$('#isepor .autocomplete').each(function(el){
             var val = el.getParent().get('itemid');
             var type = $('question-'+val+'-type').get('value');
             var extra = $('question-'+val+'-extra').get('value');
             extra = (extra.length == 0) ? '': extra;
-            new Meio.Autocomplete(el, 'ajax/isepor/autocomplete', {
+            new Meio.Autocomplete(el, URL_ROOT+'ajax/isepor/autocomplete', {
                 delay: 200,
                 minChars: 0,
                 cacheType: 'own',
@@ -922,7 +923,11 @@ var Extra = {
                     $('question-'+val+'-error-emp').addClass('hidden');
                     $('question-'+val+'-error-nan').addClass('hidden');
                     $('question-'+val+'-valid').set('value', value.valid);
-                    $('question-'+val+'-valid').set('name', 'valid-'+value.tableName+'-'+val);
+                    if($('question-'+val+'-extra'))
+                        var has_extra = '-extra';
+                    else 
+                        var has_extra = '';
+                    $('question-'+val+'-valid').set('name', 'valid-'+value.tableName+'-'+val+has_extra);
                 }, // this event is fired when you select an option
                 onDeselect: function(elements){
                     //alert('Deselected : '+elements);
@@ -1087,19 +1092,19 @@ window.addEvent('submit', function(e) {
             }
         });
     } else if($('form-isepor-final')){
-        $$('#isepor .valid').each(function(el){
-            var val = el.get('itemid');
-            var valid = false;
-            $$('#question-'+val+' input[type=radio]').each(function(el){
-                if(el.checked)
-                    valid = true;
-            });
-            if(!valid) {
-                $('question-'+val+'-error-emp').removeClass('hidden');
-                new Event(e).stop();
-            } else {
-                $('question-'+val+'-error-emp').addClass('hidden');
-            }
-        });
+//        $$('#isepor .valid').each(function(el){
+//            var val = el.get('itemid');
+//            var valid = false;
+//            $$('#question-'+val+' input[type=radio]').each(function(el){
+//                if(el.checked)
+//                    valid = true;
+//            });
+//            if(!valid) {
+//                $('question-'+val+'-error-emp').removeClass('hidden');
+//                new Event(e).stop();
+//            } else {
+//                $('question-'+val+'-error-emp').addClass('hidden');
+//            }
+//        });
     }
 });
