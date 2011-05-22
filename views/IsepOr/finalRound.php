@@ -18,7 +18,10 @@
             </p>
         </div>
     <?php endforeach; ?>
-        <h2>---------- Surprise --------</h2>
+        <h2><?php echo __('ISEPOR_EXTRA_SEPARATEUR'); ?></h2>
+        <p style="width: 500px;  margin-bottom: 20px;">
+            <?php echo __('ISEPOR_TEXT_EXTRA'); ?>
+        </p>
     <?php foreach($questionsExtra as $questionExtra): ?>
         <div id="question-<?php echo $questionExtra['id'] ?>">
             <h2><label for="question-<?php echo $questionExtra['id'] ?>-input"><?php echo htmlspecialchars($questionExtra['questions']) ?> :</label></h2>

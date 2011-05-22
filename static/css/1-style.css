@@ -802,8 +802,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .progressBarInner{
+    float: left;
     background-color: #d4e1f5;
-    width: 153px;
     height: 72%;
     padding: 3px;
     font-weight: bold;
