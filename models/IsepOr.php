@@ -203,12 +203,12 @@ class IsepOr_Model extends Model {
                             $sql[] = '(' . (int) $matches[2] . ',' . User_Model::$auth_data['id'] . ', NULL, NULL, ' . (int) $value . ', NULL, ' . ($has_extra ? '1' : '0') . ')';
                             break;
                         default:
-                            throw new Exception('Error, Please try again.');
+                            //throw new Exception('Error, Please try again.');
                             break;
                     }
                 }
             } else {
-                throw new Exception('Error, Please try again.');
+                //throw new Exception('Error, Please try again.');
             }
         }
         $data = DB::execute('
