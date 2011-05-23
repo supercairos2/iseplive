@@ -86,7 +86,7 @@ class IsepOr_Model extends Model {
                 return $questions;
                 break;
             default:
-                throw new Exception('Error, Please try again.'.$type);
+                //throw new Exception('Error, Please try again.'.$type);
                 break;
         }
     }
