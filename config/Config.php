@@ -112,7 +112,7 @@ final class Config extends ConfigAbstract {
 	const DEBUG			= true;
 
     // Etat des ISEP d'OR
-    const ISEP_OR_STATE = 1; // 0 -> Rien, 1-> Etape 1, 2-> Round 2, 3-> Resultat
+    const ISEP_OR_STATE = 2; // 0 -> Rien, 1-> Etape 1, 2-> Round 2, 3-> Resultat
 }
 
 
