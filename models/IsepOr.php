@@ -194,7 +194,7 @@ class IsepOr_Model extends Model {
                             $sql[] = '(' . (int) $matches[2] . ',' . User_Model::$auth_data['id'] . ', NULL, NULL, NULL, ' . (int) $value . ', ' . ($has_extra ? '1' : '0') . ')';
                             break;
                         case 'students':
-                            $sql[] = '(' . (int) $matches[2] . ',' . User_Model::$auth_data['id'] . ', "' . DB::quote($value) . '", NULL, NULL, NULL, ' . ($has_extra ? '1' : '0') . ')';
+                            $sql[] = '(' . (int) $matches[2] . ',' . User_Model::$auth_data['id'] . ', ' . DB::quote($value) . ', NULL, NULL, NULL, ' . ($has_extra ? '1' : '0') . ')';
                             break;
                         case 'employees':
                             $sql[] = '(' . (int) $matches[2] . ',' . User_Model::$auth_data['id'] . ', NULL, ' . (int) $value . ', NULL, NULL, ' . ($has_extra ? '1' : '0') . ')';
