@@ -586,3 +586,7 @@ ISEPOR_TITLE_RESULTS
     Les résultats des ISEP d'OR !
 ISEPOR_VOTES_RESULTS
 	{perc} % ({votes} votes)
+ISEPOR_EXTRA_SEPARATEUR
+        -------------- Surprise ! ------------
+ISEPOR_TEXT_EXTRA
+        Les hors categorie de cette années !
